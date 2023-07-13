@@ -191,6 +191,27 @@ delete_old_branches() {
   done
 }
 
+#Delete Branches if not commited in 2 weeks
+delete_branches_with_no_recent_commits() {
+  local branches=($(git branch | sed '/\*/d')) # Get list of branches
+  local branchesWithNoRecentCommits=()
+  
+  for branch in "${branches[@]}"; do
+    local lastCommitDate=$(git log -1 --format=%cd --date=short $branch)
+    local twoWeeksAgo=$(date -d "2 weeks ago" +%F)
+    local branchStatus=$(git log --since="$twoWeeksAgo" $branch)
+
+    if [ -z "$branchStatus" ]; then
+      branchesWithNoRecentCommits+=("$branch")
+    fi
+  done
+
+  for branch in "${branchesWithNoRecentCommits[@]}"; do
+    git branch -D $branch
+  done
+}
+
+
 
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
