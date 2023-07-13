@@ -162,11 +162,14 @@ alias gpo="git push --set-upstream origin"
 alias gcs="git commit -S"
 alias gcas="git commit -a -S -m"
 alias gbd="git branch -D"
-alias ga="git add ."
-alias gst="git stash"
-alias gstp="git stash pop"
+alias gaa="git add ."
+alias gstash="git stash"
 alias gsts="git stash save"
-
+alias gstl="git stash list"
+alias gsta="git stash apply"
+alias gstp="git stash pop"
+alias gstd="git stash drop"
+alias gstc="git stash clear"
 
 #delete local branches that are older than 2 weeks
 delete_old_branches() {
