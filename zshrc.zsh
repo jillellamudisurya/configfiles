@@ -141,8 +141,6 @@ lg()
 #neo vim alias
 alias vim="nvim"
 
-#old vim
-alias oldvim="vim"
 
 #git aliases
 
