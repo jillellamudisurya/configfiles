@@ -187,7 +187,9 @@ delete_old_branches() {
   done
 
   for branch in "${branchesThatAre2MonthsOld[@]}"; do
-    git branch -D $branch
+    if [[ "$branch" != "master" && "$branch" != "develop" && "$branch" != "main" ]]; then
+      git branch -D $branch
+    fi
   done
 }
 
@@ -198,7 +200,7 @@ delete_branches_with_no_recent_commits() {
   
   for branch in "${branches[@]}"; do
     local lastCommitDate=$(git log -1 --format=%cd --date=short $branch)
-    local twoWeeksAgo=$(date -d "2 weeks ago" +%F)
+    local twoWeeksAgo=$(date -v-2w +%F 2>/dev/null || date -j -v-2w +%F)
     local branchStatus=$(git log --since="$twoWeeksAgo" $branch)
 
     if [ -z "$branchStatus" ]; then
@@ -207,7 +209,9 @@ delete_branches_with_no_recent_commits() {
   done
 
   for branch in "${branchesWithNoRecentCommits[@]}"; do
-    git branch -D $branch
+    if [[ "$branch" != "master" && "$branch" != "develop" && "$branch" != "main" ]]; then
+      git branch -D $branch
+    fi
   done
 }
 
