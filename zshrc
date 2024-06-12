@@ -10,16 +10,19 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/bin:$PROFILE_PATH/flutter_working/flutter/bin:$PATH
+export PATH=$HOME/bin:$PROFILE_PATH/flutter_working/flutter/bin:/usr/local/mysql/bin:$PATH
 #
-# path to mysql
- export PATH="/usr/local/mysql/bin:$PATH"
+# # path to mysql
+#  export PATH="/usr/local/mysql/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Allows your gpg passphrase prompt to spawn (useful for signing commits).
 export GPG_TTY="$(tty)"
+
+# Initialise Ruby Env
+eval "$(rbenv init - zsh)"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -172,6 +175,9 @@ alias gstp="git stash pop"
 alias gstd="git stash drop"
 alias gstc="git stash clear"
 
+#python
+alias python="python3"
+
 #delete local branches that are older than 2 weeks
 delete_old_branches() {
   local branches=($(git branch | sed '/\*/d')) # Get list of branches
@@ -214,6 +220,15 @@ delete_branches_with_no_recent_commits() {
   done
 }
 
+#Rename Tab Session Name
+rename_session() {
+  osascript -e "tell application \"iTerm\"
+    tell current session of current window
+      set name to \"$1\"
+    end tell
+  end tell"
+  echo -e "\033]0;$1\007"
+}
 
 
 export LANG=en_US.UTF-8
